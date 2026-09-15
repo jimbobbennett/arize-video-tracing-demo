@@ -9,6 +9,8 @@ REPOSITORY = "jimbobbennett/arize-video-tracing-demo"
 PUBLIC_VIDEO_URL = (
     f"https://raw.githubusercontent.com/{REPOSITORY}/main/assets/video-demo.mp4"
 )
+
+
 async def add_public_video_url(*, callback_context, llm_request):
     """Attach the stable public URL to ADK's active auto-instrumented LLM span.
 
@@ -30,6 +32,9 @@ async def add_public_video_url(*, callback_context, llm_request):
                     f"{content_index}.message_content"
                 )
                 span.set_attribute(f"{attribute_prefix}.type", "video")
+                span.set_attribute(
+                    f"{attribute_prefix}.video.video.mime_type", "video/mp4"
+                )
                 span.set_attribute(
                     f"{attribute_prefix}.video.video.url", PUBLIC_VIDEO_URL
                 )

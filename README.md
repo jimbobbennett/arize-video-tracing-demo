@@ -22,7 +22,7 @@ The script uploads `assets/video-demo.mp4` to Gemini, waits for processing, runs
 
 ## Trace fields demonstrated
 
-- The `message_content.type = "video"` and nested `message_content.video.video.url` fields on the matching OpenInference input-message part; their indexes are derived from ADK's request so they remain correct when it adds a system message.
+- The `message_content.type = "video"` and nested `message_content.video.video` object, with `video.mime_type = "video/mp4"` and the public `video.url`, on the matching OpenInference input-message part. Its indexes are derived from ADK's request so they remain correct when it adds a system message.
 - Text prompt and transcript as adjacent OpenInference message-content parts
 
 The video is an authorized, public, derived 20-second/720p clip from the repository owner's source file. This repository is temporary and will be deleted after validation.
