@@ -20,9 +20,12 @@ This temporary demo runs a Google ADK agent that transcribes the bundled 20-seco
 
 The script uploads `assets/video-demo.mp4` to Gemini, waits for processing, runs the `video_transcriber` ADK agent with `gemini-3.8-flash`, and deletes the temporary Gemini upload. The OpenInference Google ADK instrumentor automatically emits the CHAIN, AGENT, and LLM spans; no application span is created manually.
 
+Gemini still receives its temporary Files API URI. Immediately before export, the demo replaces only the LLM span's captured `input.value` video part with the public URL, so it renders as a stable JSON object in Arize AX.
+
 ## Trace fields demonstrated
 
 - The `message_content.type = "video"` and nested `message_content.video.video` object, with `video.mime_type = "video/mp4"` and the public `video.url`, on the matching OpenInference input-message part. Its indexes are derived from ADK's request so they remain correct when it adds a system message.
+- The exported LLM input part: `{ "message_content.video": { "video.mime_type": "video/mp4", "video.url": "https://…/video-demo.mp4" } }`.
 - Text prompt and transcript as adjacent OpenInference message-content parts
 
 The video is an authorized, public, derived 20-second/720p clip from the repository owner's source file. This repository is temporary and will be deleted after validation.

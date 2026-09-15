@@ -1,5 +1,7 @@
 """ADK agent and callback that supplements its auto-instrumented LLM span."""
 
+import json
+
 from opentelemetry import trace
 
 from google.adk.agents import Agent
@@ -33,10 +35,13 @@ async def add_public_video_url(*, callback_context, llm_request):
                 )
                 span.set_attribute(f"{attribute_prefix}.type", "video")
                 span.set_attribute(
-                    f"{attribute_prefix}.video.video.mime_type", "video/mp4"
-                )
-                span.set_attribute(
-                    f"{attribute_prefix}.video.video.url", PUBLIC_VIDEO_URL
+                    f"{attribute_prefix}.video",
+                    json.dumps(
+                        {
+                            "video.mime_type": "video/mp4",
+                            "video.url": PUBLIC_VIDEO_URL,
+                        }
+                    ),
                 )
                 return None
     return None
